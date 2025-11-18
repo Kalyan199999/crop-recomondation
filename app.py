@@ -1,11 +1,15 @@
 from fastapi import FastAPI
 import joblib
 import pandas as pd
+import os
 
 app = FastAPI()
 
-model = joblib.load(".\saved_model\svc.pkl") 
-preprocessor = joblib.load(".\saved_model\ct.pkl")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+model = joblib.load(os.path.join(BASE_DIR, "saved_model", "svc.pkl"))
+preprocessor = joblib.load(os.path.join(BASE_DIR, "saved_model", "ct.pkl"))
+
 
 @app.post("/predict")
 def predict(data: dict):
